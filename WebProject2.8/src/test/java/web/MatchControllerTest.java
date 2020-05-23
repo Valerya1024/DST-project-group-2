@@ -51,7 +51,7 @@ public class MatchControllerTest extends BaseWebTest {
         } else {
             testSampleId = samples.get(samples.size() - 1).getId()+1;
         }
-        sampleDAO.save("Test","annovar");
+        sampleDAO.save("Test", "test", "annovar");
         annovarDAO.save(testSampleId,MOCK_ANNOVAR_STRING);
 
         //do match
@@ -77,7 +77,7 @@ public class MatchControllerTest extends BaseWebTest {
         } else {
             testSampleId = samples.get(samples.size() - 1).getId()+1;
         }
-        sampleDAO.save("Test","vep");
+        sampleDAO.save("Test", "test","vep");
         vepDAO.save(testSampleId,MOCK_VEP_STRING);
 
         //do match

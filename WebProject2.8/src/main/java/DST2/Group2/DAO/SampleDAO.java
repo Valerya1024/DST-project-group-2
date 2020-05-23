@@ -22,7 +22,7 @@ public class SampleDAO {
 
     private static final Logger log = LoggerFactory.getLogger(SampleDAO.class);
 
-    public int save(String uploadedBy, String sample_type) {
+    public int save(String uploadedBy, String description, String sample_type) {
         AtomicInteger newid= new AtomicInteger(1);
         DBmethods.execSQL(connection -> {
             try {
@@ -30,11 +30,12 @@ public class SampleDAO {
                 while(rs.next()) {
                     newid.set(rs.getInt("max") + 1);
                 }
-                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO sample(id,created_at, uploaded_by,sample_type) VALUES (?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO sample(id,created_at, uploaded_by, description, sample_type) VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
                 preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
                 preparedStatement.setString(3, uploadedBy);
                 preparedStatement.setInt(1,newid.get());
-                preparedStatement.setString(4,sample_type);
+                preparedStatement.setString(4,description);
+                preparedStatement.setString(5,sample_type);
                 preparedStatement.execute();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
@@ -48,15 +49,16 @@ public class SampleDAO {
         AtomicReference<SampleBean> sample = new AtomicReference<>();
         DBmethods.execSQL(connection -> {
             try {
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, created_at, uploaded_by,sample_type FROM sample WHERE id = ?");
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT id, created_at, uploaded_by, description, sample_type FROM sample WHERE id = ?");
                 preparedStatement.setInt(1, id);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 if (resultSet.next()) {
                     int sampleId = resultSet.getInt("id");
                     Date createdAt = new Date(resultSet.getTimestamp("created_at").getTime());
                     String uploadedBy = resultSet.getString("uploaded_by");
+                    String description = resultSet.getString("description");
                     String sample_type = resultSet.getString("sample_type");
-                    sample.set(new SampleBean(sampleId, createdAt, uploadedBy, sample_type));
+                    sample.set(new SampleBean(sampleId, createdAt, description, uploadedBy, sample_type));
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -75,8 +77,9 @@ public class SampleDAO {
                     int sampleId = resultSet.getInt("id");
                     Date createdAt = new Date(resultSet.getTimestamp("created_at").getTime());
                     String uploadedBy = resultSet.getString("uploaded_by");
+                    String description = resultSet.getString("description");
                     String sample_type = resultSet.getString("sample_type");
-                    SampleBean sampleBean = new SampleBean(sampleId, createdAt, uploadedBy,sample_type);
+                    SampleBean sampleBean = new SampleBean(sampleId, createdAt, description, uploadedBy,sample_type);
                     sampleBeans.add(sampleBean);
                 }
             } catch (SQLException e) {

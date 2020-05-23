@@ -58,7 +58,7 @@
             <div class="table-responsive">
                 <div class="alert alert-info" role="alert">
                     <h4 class="alert-heading">Error Info</h4>
-                    <div>Please choose the correct sample type and upload with username</div>
+                    <div>Please choose the correct sample type</div>
                     <c:if test="${validateError != null}">
                         <div><c:out value="${validateError}"/></div>
                     </c:if>

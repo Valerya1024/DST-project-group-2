@@ -41,9 +41,9 @@ public class SampleTransactTest extends BaseTest {
             testSampleId = samples.get(samples.size() - 1).getId()+1;
         }
         vepDAO.save(testSampleId,MOCK_VEP_STRING);
-        sampleDAO.save("Test_1_vep","vep"); // should automatically generate id = sample number already have + 1
+        sampleDAO.save("Test_1_vep","test","vep"); // should automatically generate id = sample number already have + 1
         annovarDAO.save(testSampleId+1,MOCK_ANNOVAR_STRING);
-        sampleDAO.save("Test_2_annovar","annovar");
+        sampleDAO.save("Test_2_annovar","test","annovar");
         // sample data
         assertNotEquals(0,vepDAO.getsampleGenes(testSampleId).size());
         assertNotEquals(0,annovarDAO.getsampleGenes(testSampleId+1).size());

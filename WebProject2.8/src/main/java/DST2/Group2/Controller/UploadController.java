@@ -15,10 +15,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import static DST2.Group2.filter.AuthenticationFilter.USERNAME;
+
 /**
  * @Description This is the description of class
  * Controller for reading user-uploaded file; determining its file type; store sample data and metadata into the database.
@@ -59,11 +63,13 @@ public class UploadController extends HttpServlet {
          * @author DST group 2
          **/
         log.info("upload vcf");
-    	String uploadedBy = request.getParameter("uploaded_by");
+        HttpSession session = request.getSession();
+        String uploadedBy = (String) session.getAttribute(USERNAME);
+    	String description = request.getParameter("description");
 
-        if (uploadedBy == null || uploadedBy.isEmpty()) {
+        if (description == null || description.isEmpty()) {
         	log.info("is empty");
-            request.setAttribute("validateError", "Uploaded by can not be blank");
+            request.setAttribute("validateError", "Description can not be blank");
             return "matching_index_error";
         }
         if (requestPart == null) {
@@ -77,14 +83,14 @@ public class UploadController extends HttpServlet {
         String content = new String(bytes);
 
         if (uploadType.equals("annovar")){
-            int sampleId = sampleDAO.save(uploadedBy,"annovar");
+            int sampleId = sampleDAO.save(uploadedBy, description, "annovar");
             annovarDAO.save(sampleId, content);
             log.info("read file "+content.length());
             request.setAttribute("samples",sampleDAO.findAll());
             return "samples";
         } else {
             if (uploadType.equals("vep")){
-                int sampleId = sampleDAO.save(uploadedBy,"vep");
+                int sampleId = sampleDAO.save(uploadedBy, description, "vep");
                 vepDAO.save(sampleId, content);
                 log.info("read file "+content.length());
                 request.setAttribute("samples",sampleDAO.findAll());

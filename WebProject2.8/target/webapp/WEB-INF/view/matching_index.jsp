@@ -139,8 +139,8 @@
                         </div>
                         <div style="margin-top: 5px;"></div>
                         <div class="form-group">
-                            <label for="uploaded_by">Uploaded By</label>
-                            <input type="text" class="form-control" id="uploaded_by" name="uploaded_by">
+                            <label for="description">Description</label>
+                            <input type="text" class="form-control" id="description" name="description">
                         </div>
                         <div style="margin-top: 10px;"></div>
                         <button type="submit" class="layui-btn" id="test4">Upload</button>
@@ -155,8 +155,8 @@
                             </div>
                             <div style="margin-top: 5px;"></div>
                             <div class="form-group">
-                                <label for="uploaded_by">Uploaded By</label>
-                                <input type="text" class="form-control" id="uploaded_by2" name="uploaded_by">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description2" name="description">
                             </div>
                             <div style="margin-top: 10px;"></div>
                             <button type="submit" class="layui-btn" id="test5">Upload</button>

@@ -130,6 +130,7 @@
                 <thead>
                 <tr>
                     <th>#</th>
+                    <th>Description</th>
                     <th>Uploaded By</th>
                     <th>Uploaded At</th>
                     <th>Sample Type</th>
@@ -140,6 +141,7 @@
                 <c:forEach items="${samples}" var="item" varStatus="loop">
                     <tr>
                         <td>${item.id}</td>
+                        <td>${item.description}</td>
                         <td>${item.uploadedBy}</td>
                         <td>${item.createdAt}</td>
                         <td>${item.sampleType}</td>
