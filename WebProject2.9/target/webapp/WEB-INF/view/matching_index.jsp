@@ -52,6 +52,11 @@
                             <label for="description">Description</label>
                             <input type="text" class="form-control" id="description" name="description">
                         </div>
+                        <div class="form-group">
+                            <label for="publicity">Allow other users to view this sample? </label>
+                            <input type="radio" class="form-control" name="publicity" id="publicity" value="true"/> Yes
+                            <input type="radio" class="form-control" name="publicity" id="publicity2" value="false" checked/> No
+                        </div>
                         <div style="margin-top: 10px;"></div>
                         <button type="submit" class="layui-btn" id="test4">Upload</button>
                     </form>
@@ -67,6 +72,11 @@
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <input type="text" class="form-control" id="description2" name="description">
+                            </div>
+                            <div class="form-group">
+                                <label for="publicity">Allow other users to view this sample? </label>
+                                <input type="radio" class="form-control" name="publicity" id="publicity3" value="true"/> Yes
+                                <input type="radio" class="form-control" name="publicity" id="publicity4" value="false" checked/> No
                             </div>
                             <div style="margin-top: 10px;"></div>
                             <button type="submit" class="layui-btn" id="test5">Upload</button>

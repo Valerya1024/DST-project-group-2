@@ -32,7 +32,7 @@ public class UploadControllerRedirectTest extends BaseWebTest {
     @Test
     public void uploadAnnovarTest() throws Exception {
         //read existing sample number
-        List<SampleBean> samples = sampleDAO.findAll();
+        List<SampleBean> samples = sampleDAO.findAll("admin",true);
         int testSampleId;
         if (samples.size()==0){
             testSampleId = 1;
@@ -59,7 +59,7 @@ public class UploadControllerRedirectTest extends BaseWebTest {
     @Test
     public void uploadVepTest() throws Exception {
         //read existing sample number
-        List<SampleBean> samples = sampleDAO.findAll();
+        List<SampleBean> samples = sampleDAO.findAll("admin",true);
         int testSampleId;
         if (samples.size()==0){
             testSampleId = 1;
@@ -86,7 +86,7 @@ public class UploadControllerRedirectTest extends BaseWebTest {
     @Test
     public void uploadBlankTest() throws Exception {
         //read existing sample number
-        List<SampleBean> samples = sampleDAO.findAll();
+        List<SampleBean> samples = sampleDAO.findAll("admin",true);
         int testSampleId;
         if (samples.size()==0){
             testSampleId = 1;
@@ -113,7 +113,7 @@ public class UploadControllerRedirectTest extends BaseWebTest {
     @Test
     public void uploadWrongTest() throws Exception {
         //read existing sample number
-        List<SampleBean> samples = sampleDAO.findAll();
+        List<SampleBean> samples = sampleDAO.findAll("admin",true);
         int testSampleId;
         if (samples.size()==0){
             testSampleId = 1;

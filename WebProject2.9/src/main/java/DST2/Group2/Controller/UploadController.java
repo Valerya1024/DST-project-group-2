@@ -48,7 +48,9 @@ public class UploadController extends HttpServlet {
         super();
     }
     @RequestMapping(value = "/upload/{uploadType}", method = RequestMethod.POST)
-	protected String doUpload(HttpServletRequest request,
+    protected String doUpload(HttpServletRequest request,
+                              @RequestParam("publicity") String publicityS,
+                              @RequestParam("description") String description,
                               @RequestParam("file") MultipartFile requestPart,
                               @PathVariable String uploadType) throws IOException {
         /**
@@ -65,10 +67,15 @@ public class UploadController extends HttpServlet {
         log.info("upload vcf");
         HttpSession session = request.getSession();
         String uploadedBy = (String) session.getAttribute(USERNAME);
-    	String description = request.getParameter("description");
+        boolean publicity;
+        if (publicityS.equals("true")) {
+            publicity = true;
+        } else {
+            publicity = false;
+        }
 
         if (description == null || description.isEmpty()) {
-        	log.info("is empty");
+            log.info("is empty");
             request.setAttribute("validateError", "Description can not be blank");
             return "matching_index_error";
         }
@@ -76,29 +83,29 @@ public class UploadController extends HttpServlet {
             request.setAttribute("validateError", "vcf output file can not be blank");
             return "matching_index_error";
         }
-        
+
         InputStream inputStream = new BufferedInputStream(requestPart.getInputStream());
-        
+
         byte[] bytes =  inputStream.readAllBytes();
         String content = new String(bytes);
 
         if (uploadType.equals("annovar")){
-            int sampleId = sampleDAO.save(uploadedBy, description, "annovar");
+            int sampleId = sampleDAO.save(uploadedBy, description, "annovar", publicity);
             annovarDAO.save(sampleId, content);
             log.info("read file "+content.length());
-            request.setAttribute("samples",sampleDAO.findAll());
+            request.setAttribute("samples",sampleDAO.findAll(uploadedBy,false));
             return "samples";
         } else {
             if (uploadType.equals("vep")){
-                int sampleId = sampleDAO.save(uploadedBy, description, "vep");
+                int sampleId = sampleDAO.save(uploadedBy, description, "vep", publicity);
                 vepDAO.save(sampleId, content);
                 log.info("read file "+content.length());
-                request.setAttribute("samples",sampleDAO.findAll());
+                request.setAttribute("samples",sampleDAO.findAll(uploadedBy,false));
                 return "samples";
             } else {
                 return "matching_index_error";
             }
         }
-	}
+    }
 
 }
