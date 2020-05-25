@@ -12,7 +12,7 @@ import java.io.IOException;
  * @Date 2020/5/16
  * @Author DST group 2
  */
-@WebFilter(urlPatterns = {"/matchingIndex"})
+@WebFilter(urlPatterns = {"/matchingIndex","/samples"})
 public class AuthenticationFilter implements Filter {
 
     public static final String ROLE_MATCHING = "role_matching";
@@ -24,9 +24,12 @@ public class AuthenticationFilter implements Filter {
         HttpSession session = httpServletRequest.getSession();
         Object username = session.getAttribute(USERNAME);
         if (username != null) {
-            Object roleViewDosingGuideline = session.getAttribute(ROLE_MATCHING);
-            if (roleViewDosingGuideline != null && ((Integer) roleViewDosingGuideline) == 1) {
+            Object rolematching = session.getAttribute(ROLE_MATCHING);
+            if (rolematching != null && ((Integer) rolematching) == 1) {
                 chain.doFilter(request, response);
+            } else {
+                response.setContentType("text/html");
+                response.getWriter().write("You are not allowed to use matching function, please <a href='signin'>sign in</a> first.");
             }
         } else {
             response.setContentType("text/html");

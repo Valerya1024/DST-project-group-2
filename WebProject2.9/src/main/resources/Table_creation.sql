@@ -170,7 +170,9 @@ CREATE TABLE sample(
     id INT PRIMARY KEY,
     created_at DATE,
     uploaded_by VARCHAR,
-    sample_type VARCHAR
+    sample_type VARCHAR,
+	description VARCHAR,
+	publicity BOOLEAN
 );
 
 -- location_annvar: created from variant.tsv & var_drug_ann.tsv
